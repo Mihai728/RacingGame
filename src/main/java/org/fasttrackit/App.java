@@ -1,5 +1,7 @@
 package org.fasttrackit;
 
+import java.util.Scanner;
+
 /**
  * Hello world!
  *
@@ -42,6 +44,11 @@ public class App
         System.out.println("Car1 name: " + car.name); // concatenation
 
         car = car2;
+        System.out.println(4 % 2);
+        System.out.println(4 % 3);
 
+        Scanner scanner = new Scanner(System.in);
+        String text = scanner.nextLine();
+        System.out.println("Input from user: " + text);
     }
 }
