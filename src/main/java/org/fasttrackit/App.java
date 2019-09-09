@@ -16,6 +16,7 @@ public class App
         car.doorCount = 2;
         car.setMaxSpeed(280);
         car.setFuelType("Gasoline");
+        System.out.println("Car object: " + car.toString());
 
 
         System.out.println(car.getName());
@@ -59,5 +60,9 @@ public class App
         System.out.println("Total count in car2: " + car2.totalCount);
         System.out.println("Total count in Car class: " + Car.totalCount);*/
 
+        HybridCar hybridCar = new HybridCar();
+       hybridCar.setName("Cheater");
+       hybridCar.accelerate(60, 1);
+        System.out.println("Fuel level: " + hybridCar.getFuelLevel());
     }
 }
