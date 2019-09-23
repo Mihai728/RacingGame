@@ -17,59 +17,75 @@ public class Game {
     public void start() throws Exception {
         initializeTracks();
         displayTracks();
+        Track selectedTrack = getSelectedTrackFromUser();
+
         initializeCompetitors();
     }
 
-    private int getCompetitorCountFromUser() throws Exception {
-        System.out.println("Please enter number of players ");
+    private Track getSelectedTrackFromUser() throws Exception {
+        System.out.println("Please select a track. ");
         Scanner scanner = new Scanner(System.in);
         try {
-            return scanner.nextInt();
-        } catch (InputMismatchException e) {
-            throw new Exception("You have entered an invalid number. ");
-        } finally {
-            System.out.println("Finally block is always executed");
+            int userChoice = scanner.nextInt();
+            return tracks[userChoice - 1];
+        } catch (InputMismatchException | ArrayIndexOutOfBoundsException e) {
+            System.out.println("You have entered an invalid number. ");
+            getSelectedTrackFromUser();
+            // recursion a method calling itself
+            return getSelectedTrackFromUser();
         }
     }
-
-    private void initializeCompetitors() throws Exception {
-        int competitorCount = getCompetitorCountFromUser();
-
-        System.out.println("Today's competitors are: ");
-        for (int i = 0; i < competitorCount; i++) {
-            Vehicle competitor = new Vehicle();
-            competitor.setName("Competitor " + i);
-            competitor.setMaxSpeed(300);
-            competitor.setMileage(ThreadLocalRandom.current().nextDouble(6, 12));
-            competitor.setFuelLevel(80);
-            System.out.println(competitor);
-
-
-            competitors.add(competitor);
+        private int getCompetitorCountFromUser() throws Exception {
+            System.out.println("Please enter number of players ");
+            Scanner scanner = new Scanner(System.in);
+            try {
+                return scanner.nextInt();
+            } catch (InputMismatchException e) {
+                throw new Exception("You have entered an invalid number. ");
+            } finally {
+                System.out.println("Finally block is always executed");
+            }
         }
-    }
 
-    private void initializeTracks() {
-        Track track1 = new Track();
-        track1.setName("Monte Carlo");
-        track1.setLenght(300);
+        private void initializeCompetitors () throws Exception {
+            int competitorCount = getCompetitorCountFromUser();
 
-        tracks[0] = track1;
+            System.out.println("Today's competitors are: ");
+            for (int i = 0; i < competitorCount; i++) {
+                Vehicle competitor = new Vehicle();
+                competitor.setName("Competitor " + i);
+                competitor.setMaxSpeed(300);
+                competitor.setMileage(ThreadLocalRandom.current().nextDouble(6, 12));
+                competitor.setFuelLevel(80);
+                System.out.println(competitor);
 
-        Track track2 = new Track();
-        track2.setName("Monza");
-        track2.setLenght(400);
-        tracks[1] = track2;
 
-    }
+                competitors.add(competitor);
+            }
+        }
 
-    private void displayTracks() {
-        System.out.println("Available tracks: ");
+        private void initializeTracks () {
+            Track track1 = new Track();
+            track1.setName("Monte Carlo");
+            track1.setLenght(300);
 
-        for (int i = 0; i < tracks.length; i++) {
-            if (tracks[i] != null) {
-                System.out.println(tracks[i].getName() + " - Length: " + tracks[i].getLenght() + " km.");
+            tracks[0] = track1;
+
+            Track track2 = new Track();
+            track2.setName("Monza");
+            track2.setLenght(400);
+            tracks[1] = track2;
+
+        }
+
+        private void displayTracks () {
+            System.out.println("Available tracks: ");
+
+            for (int i = 0; i < tracks.length; i++) {
+                if (tracks[i] != null) {
+                    System.out.println(tracks[i].getName() + " - Length: " + tracks[i].getLenght() + " km.");
+                }
             }
         }
     }
-}
+
