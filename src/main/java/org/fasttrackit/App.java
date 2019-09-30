@@ -5,7 +5,12 @@ public class App
     public static void main(String[] args) throws Exception {
         Game game = new Game ();
         game.start();
-    }
+
+        // do{
+            // System.out.println("Repeat something");
+        // }
+        // while (true);
+    // }
 //    public static void main( String[] args ) {
 //
 //        Engine engine2 = new Engine ();

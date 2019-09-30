@@ -21,14 +21,30 @@ public class Game {
 
         initializeCompetitors();
 
-        //for-each or enhanced for loop
-        for (Vehicle vehicle : competitors) {
-            double speed = getAccelerationSpeedFromUser();
-            vehicle.accelerate(60,1);
+        boolean winnerNotKnown = true;
+        int competitorsWithoutFuel = 0;
+        while (winnerNotKnown && competitorsWithoutFuel < competitors.size()) {
+
+
+            //for-each or enhanced for loop
+            for (Vehicle vehicle : competitors) {
+                double speed = getAccelerationSpeedFromUser();
+                vehicle.accelerate(60, 1);
+                if (selectedTrack.getLenght() <= vehicle.getTraveledDistance()) {
+                    winnerNotKnown = false;
+                    System.out.println("The winner is: " + vehicle.getName());
+                    break;
+                }
+                if (vehicle.getFuelLevel() <= 0) {
+                    competitorsWithoutFuel++;
+
+                }
+            }
         }
+
     }
 
-    private double getAccelerationSpeedFromUser () {
+    private double getAccelerationSpeedFromUser() {
         System.out.println("Please enter acceleration speed.");
         Scanner scanner = new Scanner(System.in);
         try {
@@ -53,57 +69,58 @@ public class Game {
             return getSelectedTrackFromUser();
         }
     }
-        private int getCompetitorCountFromUser() throws Exception {
-            System.out.println("Please enter number of players ");
-            Scanner scanner = new Scanner(System.in);
-            try {
-                return scanner.nextInt();
-            } catch (InputMismatchException e) {
-                throw new Exception("You have entered an invalid number. ");
-            } finally {
-                System.out.println("Finally block is always executed");
-            }
+
+    private int getCompetitorCountFromUser() throws Exception {
+        System.out.println("Please enter number of players ");
+        Scanner scanner = new Scanner(System.in);
+        try {
+            return scanner.nextInt();
+        } catch (InputMismatchException e) {
+            throw new Exception("You have entered an invalid number. ");
+        } finally {
+            System.out.println("Finally block is always executed");
         }
+    }
 
-        private void initializeCompetitors () throws Exception {
-            int competitorCount = getCompetitorCountFromUser();
+    private void initializeCompetitors() throws Exception {
+        int competitorCount = getCompetitorCountFromUser();
 
-            System.out.println("Today's competitors are: ");
-            for (int i = 0; i < competitorCount; i++) {
-                Vehicle competitor = new Vehicle();
-                competitor.setName("Competitor " + i);
-                competitor.setMaxSpeed(300);
-                competitor.setMileage(ThreadLocalRandom.current().nextDouble(6, 12));
-                competitor.setFuelLevel(80);
-                System.out.println(competitor);
+        System.out.println("Today's competitors are: ");
+        for (int i = 0; i < competitorCount; i++) {
+            Vehicle competitor = new Vehicle();
+            competitor.setName("Competitor " + i);
+            competitor.setMaxSpeed(300);
+            competitor.setMileage(ThreadLocalRandom.current().nextDouble(6, 12));
+            competitor.setFuelLevel(80);
+            System.out.println(competitor);
 
 
-                competitors.add(competitor);
-            }
+            competitors.add(competitor);
         }
+    }
 
-        private void initializeTracks () {
-            Track track1 = new Track();
-            track1.setName("Monte Carlo");
-            track1.setLenght(300);
+    private void initializeTracks() {
+        Track track1 = new Track();
+        track1.setName("Monte Carlo");
+        track1.setLenght(300);
 
-            tracks[0] = track1;
+        tracks[0] = track1;
 
-            Track track2 = new Track();
-            track2.setName("Monza");
-            track2.setLenght(400);
-            tracks[1] = track2;
+        Track track2 = new Track();
+        track2.setName("Monza");
+        track2.setLenght(400);
+        tracks[1] = track2;
 
-        }
+    }
 
-        private void displayTracks () {
-            System.out.println("Available tracks: ");
+    private void displayTracks() {
+        System.out.println("Available tracks: ");
 
-            for (int i = 0; i < tracks.length; i++) {
-                if (tracks[i] != null) {
-                    System.out.println(tracks[i].getName() + " - Length: " + tracks[i].getLenght() + " km.");
-                }
+        for (int i = 0; i < tracks.length; i++) {
+            if (tracks[i] != null) {
+                System.out.println(tracks[i].getName() + " - Length: " + tracks[i].getLenght() + " km.");
             }
         }
     }
+}
 
